@@ -3,6 +3,13 @@ require "http"
 require "optparse"
 
 class Cafe < ApplicationRecord
+  validates :name, presence: true
+  validates :zipcode, presence: true
+  enum outlets: [ :few, :some, :many]
+  enum coffeeQuality: [ :"Decent Coffee", :"Good Coffee", :"Exceptional Coffee"]
+  enum teaQuality: [ :"Decent Tea", :"Good Tea", :"Exceptional Tea"]
+  serialize :vibe, Array
+  serialize :food, Array
 
   CLIENT_ID = ENV["yelp_app_id"]
   CLIENT_SECRET = ENV["yelp_app_secret"]
@@ -61,8 +68,8 @@ class Cafe < ApplicationRecord
   # Returns a parsed json object of the request
 
   def self.find_or_create_from_yelp(hash)
-    if self.find_by(name: hash["name"])
-      self.find_by(name: hash["name"])
+    if self.find_by(address: hash["location"]["display_address"].join(', '))
+      self.find_by(address: hash["location"]["display_address"].join(', '))
     else
       self.create(name: hash["name"], zipcode: hash["location"]["zip_code"], address: hash["location"]["display_address"].join(', '), website: hash["url"])
     end
