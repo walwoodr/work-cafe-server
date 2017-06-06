@@ -16,10 +16,10 @@ class Cafe < ApplicationRecord
   GRANT_TYPE = "client_credentials"
 
 
-  DEFAULT_BUSINESS_ID = "yelp-san-francisco"
-  DEFAULT_TERM = "dinner"
-  DEFAULT_LOCATION = "San Francisco, CA"
-  SEARCH_LIMIT = 5
+  DEFAULT_BUSINESS_ID = "yelp-minneapolis"
+  DEFAULT_TERM = "coffee"
+  DEFAULT_LOCATION = "Minneapolis, MN"
+  SEARCH_LIMIT = 25
 
 
   # Make a request to the Fusion API token endpoint to get the access token.
@@ -69,6 +69,12 @@ class Cafe < ApplicationRecord
     }
 
     response = HTTP.auth(bearer_token).get(url, params: params)
-    response.parse
+    @@search_results = response.parse
+  end
+
+  def self.save
+    @@search_results.each do |business|
+      self.new()
+    end
   end
 end

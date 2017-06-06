@@ -4,11 +4,11 @@ class CreateCafes < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :zipcode
       t.string :address
-      t.string :hours # I am concerned about this
+      t.text :hours # I am concerned about this
       t.string :website
       t.integer :outlets
-      t.string :vibe
-      t.string :food
+      t.text :vibe
+      t.text :food
       t.boolean :genderNeutralRestrooms
       t.integer :coffeeQuality
       t.integer :teaQuality
