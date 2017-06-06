@@ -7,7 +7,6 @@ class Cafe < ApplicationRecord
   CLIENT_ID = ENV["yelp_app_id"]
   CLIENT_SECRET = ENV["yelp_app_secret"]
 
-
   # Constants, do not change these
   API_HOST = "https://api.yelp.com"
   SEARCH_PATH = "/v3/businesses/search"
@@ -19,7 +18,7 @@ class Cafe < ApplicationRecord
   DEFAULT_BUSINESS_ID = "yelp-minneapolis"
   DEFAULT_TERM = "coffee"
   DEFAULT_LOCATION = "Minneapolis, MN"
-  SEARCH_LIMIT = 25
+  SEARCH_LIMIT = 15
 
 
   # Make a request to the Fusion API token endpoint to get the access token.
@@ -60,6 +59,15 @@ class Cafe < ApplicationRecord
   # term - search term used to find businesses
   # location - what geographic location the search should happen
   # Returns a parsed json object of the request
+
+  def self.find_or_create_from_yelp(hash)
+    if self.find_by(name: hash["name"])
+      self.find_by(name: hash["name"])
+    else
+      self.create(name: hash["name"], zipcode: hash["location"]["zip_code"], address: hash["location"]["display_address"].join(', '), website: hash["url"])
+    end
+  end
+
   def self.search(location)
     url = "#{API_HOST}#{SEARCH_PATH}"
     params = {
@@ -69,12 +77,18 @@ class Cafe < ApplicationRecord
     }
 
     response = HTTP.auth(bearer_token).get(url, params: params)
-    @@search_results = response.parse
+    @@search_results = response.parse["businesses"]
   end
 
-  def self.save
-    @@search_results.each do |business|
-      self.new()
+  def self.build
+    @@search_results.collect do |business|
+      self.find_or_create_from_yelp(business)
     end
   end
+
+  def self.find_or_build(location)
+    self.search(location)
+    self.build
+  end
+
 end

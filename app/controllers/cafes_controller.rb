@@ -1,7 +1,7 @@
 class CafesController < ApplicationController
   def search
     zipcode = params[:zipcode]
-    @json = Cafe.search(zipcode)
-    render json: @json["businesses"]
+    @json = Cafe.find_or_build(zipcode)
+    render json: @json
   end
 end
