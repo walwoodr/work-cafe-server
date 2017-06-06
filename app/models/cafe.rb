@@ -68,8 +68,9 @@ class Cafe < ApplicationRecord
   # Returns a parsed json object of the request
 
   def self.find_or_create_from_yelp(hash)
-    if self.find_by(address: hash["location"]["display_address"].join(', '))
-      self.find_by(address: hash["location"]["display_address"].join(', '))
+    cafe = self.find_by(address: hash["location"]["display_address"].join(', '))
+    if cafe
+      cafe
     else
       self.create(name: hash["name"], zipcode: hash["location"]["zip_code"], address: hash["location"]["display_address"].join(', '), website: hash["url"])
     end
