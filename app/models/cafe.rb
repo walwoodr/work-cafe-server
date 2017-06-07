@@ -22,7 +22,7 @@ class Cafe < ApplicationRecord
   GRANT_TYPE = "client_credentials"
 
 
-  DEFAULT_BUSINESS_ID = "yelp-minneapolis"
+  DEFAULT_BUSINESS_ID = "blue-moon-coffee-cafe-minneapolis"
   DEFAULT_TERM = "coffee"
   DEFAULT_LOCATION = "Minneapolis, MN"
   SEARCH_LIMIT = 15
