@@ -1,16 +1,50 @@
 require "json"
 require "http"
 require "optparse"
+require 'pry'
 
 class Cafe < ApplicationRecord
   validates :name, presence: true
   validates :zipcode, presence: true
-  enum outlets: [ :few, :some, :many]
-  enum coffeeQuality: [ :"Decent Coffee", :"Good Coffee", :"Exceptional Coffee"]
-  enum teaQuality: [ :"Decent Tea", :"Good Tea", :"Exceptional Tea"]
-  serialize :vibe, Array
-  serialize :food, Array
+  # enum outlets: [ :few, :some, :many]
+  # enum coffeeQuality: [ :"Decent Coffee", :"Good Coffee", :"Exceptional Coffee"]
+  # enum teaQuality: [ :"Decent Tea", :"Good Tea", :"Exceptional Tea"]
+  # serialize :vibe, Array
+  # serialize :food, Array
   has_many :reviews
+
+  def outlets
+    outlets = self.reviews.map { |review| review.outlets }
+    result = {value: "unknown", percent: 54};
+    [0,1,2].each do |value|
+      value_percent = (outlets.count(value)*100)/outlets.size
+      if value_percent > result[:percent]
+        result = {value: value, percent: value_percent}
+      end
+    end
+    result
+  end
+
+  def coffeeQuality
+    #
+  end
+
+  def teaQuality
+    #
+  end
+
+  def vibe
+    #
+  end
+
+  def food
+    #
+  end
+
+  def genderNeutralRestrooms
+    #
+  end
+
 
   CLIENT_ID = ENV["yelp_app_id"]
   CLIENT_SECRET = ENV["yelp_app_secret"]
