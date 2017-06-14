@@ -10,6 +10,7 @@ class Cafe < ApplicationRecord
   enum teaQuality: [ :"Decent Tea", :"Good Tea", :"Exceptional Tea"]
   serialize :vibe, Array
   serialize :food, Array
+  has_many :reviews
 
   CLIENT_ID = ENV["yelp_app_id"]
   CLIENT_SECRET = ENV["yelp_app_secret"]
