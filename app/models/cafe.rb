@@ -17,20 +17,48 @@ class Cafe < ApplicationRecord
     outlets = self.reviews.map { |review| review.outlets }
     result = {value: "unknown", percent: 54};
     [0,1,2].each do |value|
-      value_percent = (outlets.count(value)*100)/outlets.size
+      value_percent = (outlets.count(value)*100.0)/outlets.size
       if value_percent > result[:percent]
         result = {value: value, percent: value_percent}
       end
     end
     result
+    # take all of the reviews for this cafe
+    #
+    # iterate over the array of values
+    #
+    # return an object with the most often selected
+    # answer or "unknown" if no reviews OR
+    # no answer has more than 55% of the reviews
+    # and the percentage who said it.
+    # {value: 2, percent: 100}
+    # profit
   end
 
   def coffeeQuality
+    # take all of the reviews for this cafe
     #
+    # iterate over the array of values
+    #
+    # return an object with the most often selected
+    # answer or "unknown" if no reviews OR
+    # no answer has more than 55% of the reviews
+    # and the percentage who said it.
+    # {value: 2, percent: 100}
+    # profit
   end
 
   def teaQuality
+    # take all of the reviews for this cafe
     #
+    # iterate over the array of values
+    #
+    # return an object with the most often selected
+    # answer or "unknown" if no reviews OR
+    # no answer has more than 55% of the reviews
+    # and the percentage who said it.
+    # {value: 2, percent: 100}
+    # profit
   end
 
   def vibe
