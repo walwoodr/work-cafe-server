@@ -89,7 +89,7 @@ class Cafe < ApplicationRecord
   end
 
   def self.build
-    @@search_results.collect do |business|
+    @@search_results.each do |business|
       self.find_or_create_from_yelp(business)
     end
   end
