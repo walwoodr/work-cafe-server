@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: blog_development
+  database: work_cafe_development
   pool: 5
   username: walwoodr
   password:
@@ -9,7 +9,15 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: blog_test
+  database: work_cafe_test
+  pool: 5
+  username: walwoodr
+  password:
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: work_cafe_production
   pool: 5
   username: walwoodr
   password:
