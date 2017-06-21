@@ -3,7 +3,6 @@ class CafesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def search
-    raise params.inspect
     zipcode = params[:zipcode]
     @json = Cafe.find_or_build(zipcode)
     render json: @json
